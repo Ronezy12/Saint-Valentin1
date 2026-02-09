@@ -139,12 +139,23 @@
     }
 
     .veil{
-      position:absolute; inset:0;
-      display:grid; place-items:center; padding: 18px;
-      background: linear-gradient(180deg, rgba(0,0,0,.10), rgba(0,0,0,.35));
-      transition: opacity .55s ease, transform .55s ease;
-      z-index: 5;
-    }
+  position:absolute;
+  inset:0;
+  display:grid;
+  place-items:center;
+  padding:18px;
+
+  /* voile plus léger */
+  background: linear-gradient(
+    180deg,
+    rgba(0,0,0,.05),
+    rgba(0,0,0,.18)
+  );
+
+  backdrop-filter: blur(2px);
+  transition: opacity .55s ease, transform .55s ease;
+  z-index:5;
+}
     .veil.hidden{ opacity:0; transform: translateY(10px); pointer-events:none; }
     .veilBox{
       width:min(360px, 100%);
