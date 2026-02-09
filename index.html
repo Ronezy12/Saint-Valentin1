@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Test audio</title>
+</head>
+<body style="background:#111;color:white;font-family:sans-serif;text-align:center;padding-top:50px">
+
+<h1>🎵 TEST AUDIO</h1>
+
+<p>Si tu entends la musique après avoir cliqué, tout est OK.</p>
+
+<button id="play" style="font-size:22px;padding:15px 30px;cursor:pointer">
+▶️ Lancer la musique
+</button>
+
+<audio id="music" preload="auto">
+  <source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+const btn = document.getElementById("play");
+const music = document.getElementById("music");
+
+btn.addEventListener("click", () => {
+  music.volume = 0.5;
+  music.play()
+    .then(() => console.log("SON OK"))
+    .catch(err => alert("ERREUR AUDIO : " + err));
+});
+</script>
+
+</body>
+</html>
