@@ -4,6 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Pour toi 💌</title>
+
   <style>
     :root{
       --bg1:#0b0b16; --bg2:#120b24;
@@ -27,6 +28,7 @@
         linear-gradient(180deg,var(--bg1),var(--bg2));
     }
 
+    /* Orbes */
     .orb{
       position:absolute; width:320px;height:320px; border-radius:999px;
       filter: blur(46px); opacity:.55;
@@ -38,6 +40,7 @@
     .o3{ left:18%; bottom:-140px; background:rgba(60,255,180,.12); animation-duration:14s; }
     @keyframes drift{ from{ transform: translate(0,0)} to{ transform: translate(48px,28px)} }
 
+    /* Layout */
     .wrap{
       width:min(980px, 100%);
       display:grid; gap:16px;
@@ -45,7 +48,6 @@
       align-items:stretch;
       position:relative; z-index:2;
     }
-    @media (max-width:900px){ .wrap{ grid-template-columns:1fr; } }
 
     .panel{
       position:relative;
@@ -74,30 +76,43 @@
       color: var(--muted); font-size: 13px;
       user-select:none; margin-bottom: 12px;
     }
-    .kdot{ width:9px;height:9px;border-radius:50%; background: var(--good); box-shadow: 0 0 18px rgba(60,255,180,.55); }
+    .kdot{
+      width:9px;height:9px;border-radius:50%;
+      background: var(--good);
+      box-shadow: 0 0 18px rgba(60,255,180,.55);
+    }
 
     h1{ margin:2px 0 8px; font-size: clamp(22px, 3.4vw, 34px); }
     .sub{ margin:0 0 14px; color: var(--muted); line-height:1.6; font-size: 15px; }
 
-    .ctaRow{ display:flex; flex-wrap:wrap; gap:10px; align-items:center; margin-top: 10px; }
+    .ctaRow{
+      display:flex; flex-wrap:wrap; gap:10px; align-items:center;
+      margin-top: 10px;
+    }
     button{
-      border:0; border-radius:999px; padding: 12px 16px;
-      font-weight: 800; cursor:pointer; color: var(--ink);
+      border-radius:999px;
+      padding: 12px 16px;
+      font-weight: 800;
+      cursor:pointer;
+      color: var(--ink);
       transition: transform .12s ease, filter .12s ease, opacity .12s ease;
       background: rgba(255,255,255,.06);
       border: 1px solid rgba(255,255,255,.14);
+      font-size: 16px; /* anti-zoom iOS */
     }
     button:hover{ transform: translateY(-1px); filter: brightness(1.05); }
     button:active{ transform: translateY(1px); }
     button[disabled]{ opacity:.45; cursor:not-allowed; transform:none; }
+
     .primary{
       background: linear-gradient(135deg, var(--accent), #ff88b2);
       border:0;
       box-shadow: 0 12px 34px rgba(255,61,127,.28);
     }
-    .mute{ font-weight:900; }
+    .mute{ font-weight:900; padding: 12px 14px; }
     .tiny{ margin-top:12px; font-size:12px; color: var(--muted); opacity:.95; }
 
+    /* Scene */
     .scene{
       min-height: 360px;
       display:flex; align-items:center; justify-content:center; padding:10px;
@@ -139,26 +154,15 @@
     }
 
     .veil{
-  position:absolute;
-  inset:0;
-  display:grid;
-  place-items:center;
-  padding:18px;
-
-  /* voile plus léger */
-  background: linear-gradient(
-    180deg,
-    rgba(0,0,0,.05),
-    rgba(0,0,0,.18)
-  );
-
-  backdrop-filter: blur(2px);
-  transition: opacity .55s ease, transform .55s ease;
-  z-index:5;
-}
+      position:absolute; inset:0;
+      display:grid; place-items:center; padding:18px;
+      background: linear-gradient(180deg, rgba(0,0,0,.06), rgba(0,0,0,.20));
+      transition: opacity .55s ease, transform .55s ease;
+      z-index: 5;
+    }
     .veil.hidden{ opacity:0; transform: translateY(10px); pointer-events:none; }
     .veilBox{
-      width:min(360px, 100%);
+      width:min(360px, 92%);
       border-radius: 22px;
       border:1px solid rgba(255,255,255,.16);
       background: rgba(15,16,32,.78);
@@ -177,12 +181,13 @@
       background: linear-gradient(180deg, var(--paper1), var(--paper2));
       color:#1a1030;
       border: 1px solid rgba(0,0,0,.10);
-      padding: 16px 16px 44px;
+      padding: 16px 16px 46px;
       transform: translateY(175px);
       opacity:0;
       transition: transform 1.05s cubic-bezier(.2,.85,.2,1), opacity .8s ease;
       z-index:4;
       overflow:hidden;
+      box-shadow: 0 10px 30px rgba(0,0,0,.25);
     }
     .message h2{ margin:2px 0 8px; font-size:18px; }
     .message p{ margin:0; line-height:1.55; font-size:14px; white-space:pre-wrap; }
@@ -198,7 +203,7 @@
     .paperEdge b{ color: rgba(26,16,48,.86); }
 
     .seal{
-      position:absolute; left:50%; top:80%;
+      position:absolute; left:50%; top: calc(50% + 42px);
       transform: translate(-50%,-50%);
       width:74px; height:74px;
       border-radius:50%;
@@ -209,11 +214,17 @@
       z-index: 6;
       transition: transform .8s cubic-bezier(.2,.85,.2,1), opacity .6s ease;
       cursor:pointer; user-select:none;
+      animation: pulse 1.8s ease-in-out infinite;
     }
     .seal span{ font-size:28px; filter: drop-shadow(0 8px 10px rgba(0,0,0,.35)); }
+    @keyframes pulse{
+      0%{ transform: translate(-50%,-50%) scale(1); }
+      50%{ transform: translate(-50%,-50%) scale(1.08); }
+      100%{ transform: translate(-50%,-50%) scale(1); }
+    }
 
     .opened .message{ transform: translateY(-18px); opacity:1; }
-    .opened .seal{ transform: translate(-50%,-50%) scale(.86); opacity:.18; pointer-events:none; }
+    .opened .seal{ animation:none; transform: translate(-50%,-50%) scale(.86); opacity:.18; pointer-events:none; }
 
     .modal{
       position:fixed; inset:0;
@@ -269,11 +280,39 @@
       12%{ opacity:.78; }
       100%{ transform: translateY(-120vh) translateX(var(--drift)) scale(1.25); opacity:0; }
     }
+
+    /* ===== MOBILE RESPONSIVE ===== */
+    @media (max-width: 900px){
+      body{ padding:16px; overflow:auto; }
+      .wrap{ grid-template-columns:1fr; gap:14px; }
+      .panel{ padding:16px; }
+      .scene{ min-height:auto; padding:6px; }
+      .card3d{
+        width:100%;
+        height:auto;
+        aspect-ratio: 16 / 10;
+        min-height:260px;
+        max-height:360px;
+      }
+      .message{
+        left:14px; right:14px; bottom:14px;
+        height:auto;
+        max-height:70%;
+        padding:14px 14px 46px;
+        overflow:auto;
+        -webkit-overflow-scrolling: touch;
+      }
+      .seal{
+        top: calc(50% + 44px);
+        width:66px; height:66px;
+      }
+      h1{ font-size:24px; }
+    }
   </style>
 </head>
 
 <body>
-  <!-- Musique: garde music.mp3 à la racine du repo -->
+  <!-- ⚠️ garde music.mp3 à la racine du repo -->
   <audio id="music" preload="auto" loop>
     <source src="music.mp3" type="audio/mpeg">
   </audio>
@@ -292,6 +331,9 @@
         <button id="surpriseBtn" disabled>Découvrir la surprise 🌟</button>
         <button class="mute" id="muteBtn" title="Son">🔊</button>
       </div>
+
+      <p class="tiny">Sur téléphone, le son démarre seulement après un clic (normal).</p>
+    </section>
 
     <section class="panel scene" id="scene">
       <div class="card3d" id="card">
@@ -414,7 +456,7 @@ Joyeuse Saint-Valentin 💞`;
       }
     }
 
-    // ---- Petit son pop + papier (générés) ----
+    // ---- SFX générés (pas besoin de fichiers) ----
     let audioCtx=null, master=null;
     function ensureSfx(){
       if(audioCtx) return;
